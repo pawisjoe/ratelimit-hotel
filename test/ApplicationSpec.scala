@@ -24,7 +24,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
       val hotels = route(app, FakeRequest(GET, "/hotel/Test?apikey=\"test\"")).get
       status(hotels) mustBe BAD_REQUEST
       contentType(hotels) mustBe Some("text/plain")
-      contentAsString(hotels) mustBe Some("No hotels found")
+      contentAsString(hotels) mustBe "No hotels found"
     }
 
     "render api exceeded limit" in {
@@ -32,16 +32,16 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
       var hotels = route(app, FakeRequest(GET, "/hotel/Bangkok?apikey=\"test\"")).get
       status(hotels) mustBe TOO_MANY_REQUESTS
       contentType(hotels) mustBe Some("text/plain")
-      contentAsString(hotels) mustBe Some("API key rate limit exceeded")
+      contentAsString(hotels) mustBe "API key rate limit exceeded"
     }
 
-    "render api exceeded limit" in {
+    "render api has been suspended" in {
       route(app, FakeRequest(GET, "/hotel/Bangkok?apikey=\"test\"")).get
       route(app, FakeRequest(GET, "/hotel/Bangkok?apikey=\"test\"")).get
       var hotels = route(app, FakeRequest(GET, "/hotel/Bangkok?apikey=\"test\"")).get
       status(hotels) mustBe TOO_MANY_REQUESTS
       contentType(hotels) mustBe Some("text/plain")
-      contentAsString(hotels) mustBe Some("API key has been suspended. Please wait and request again")
+      contentAsString(hotels) mustBe "API key has been suspended. Please wait and request again"
     }
 
   }
