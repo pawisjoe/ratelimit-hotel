@@ -19,3 +19,15 @@ parameters:
 - apikey (require some random text to request)
 
 example: http://localhost:9000/hotel/Bangkok?orderby=DESC&apikey=testservice
+
+## Configuration
+
+Main config file: conf/application.conf
+
+```
+maxRequest = 1 [max request per period]
+maxRequestTime = 10000 [max request period time (milliseconds)]
+suspendTime = 300000 [request suspend time (milliseconds)]
+```
+
+
